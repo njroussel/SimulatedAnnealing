@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <mcaa/sampler.h>
 
 namespace py = pybind11;
 
@@ -15,6 +16,8 @@ PYBIND11_MODULE(mcaa, m) {
            :toctree: _generate
 
     )pbdoc";
+
+    Sampler::defPybind(m);
 
 
 #ifdef VERSION_INFO

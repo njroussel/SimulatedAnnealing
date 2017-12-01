@@ -16,8 +16,14 @@ include_directories(
 
 pybind11_add_module(mcaa
     # Header files
+    include/mcaa/sampler.h
+    include/mcaa/helpers.h
+    include/mcaa/mcmc.h
 
     # Source files
+    src/sampler.cpp
+    src/helpers.cpp
+    src/mcmc.cpp
     src/main.cpp
     )
 
