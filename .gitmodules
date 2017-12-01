@@ -1,0 +1,6 @@
+[submodule "ext/pybind11"]
+	path = ext/pybind11
+	url = git@github.com:pybind/pybind11.git
+[submodule "ext/pcg32"]
+	path = ext/pcg32
+	url = git@github.com:wjakob/pcg32.git
