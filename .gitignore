@@ -1,0 +1,12 @@
+### JupyterNotebook ###
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+### Python ###
+__pycache__/
+*.py[cod]
+*$py.class
+
+### Build ###
+build/
+compile_commands.json
