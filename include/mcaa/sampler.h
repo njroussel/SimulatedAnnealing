@@ -10,6 +10,15 @@ class Sampler {
             Sample(int _value, int _valueBackup) :
                 value(_value), valueBackup(_valueBackup) { }
 
+            static void defPybind(pybind11::module &m) {
+                pybind11::class_<Sample>(m, "sample")
+                    .def(pybind11::init<int, int>(),
+                            pybind11::arg("value"),
+                            pybind11::arg("valueBackup"))
+                    .def("backup", &Sample::backup)
+                    .def("restore", &Sample::restore);
+            }
+
             void backup() {
                 valueBackup = value;
             }

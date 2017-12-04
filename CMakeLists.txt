@@ -33,41 +33,14 @@ find_package( Threads )
 
 add_executable(mcaa
     # Header files
-    include/mcaa/helpers.h
-    include/mcaa/dpdf.h
     include/mcaa/sampler.h
-    include/mcaa/rwm.h
-    include/mcaa/mala.h
-    include/mcaa/function1D.h
-    include/mcaa/mcmc1D.h
-    include/mcaa/mh1D.h
-    include/mcaa/drm1D.h
-    include/mcaa/mtm1D.h
-    include/mcaa/multiRunner1D.h
-    include/mcaa/function2D.h
-    include/mcaa/mcmc2D.h
-    include/mcaa/mh2D.h
-    include/mcaa/drm2D.h
-    include/mcaa/mtm2D.h
-    include/mcaa/multiRunner2D.h
+    include/mcaa/helpers.h
+    include/mcaa/mcmc.h
 
     # Source files
-    src/helpers.cpp
     src/sampler.cpp
-    src/rwm.cpp
-    src/mala.cpp
-    src/function1D.cpp
-    src/mcmc1D.cpp
-    src/mh1D.cpp
-    src/drm1D.cpp
-    src/mtm1D.cpp
-    src/multiRunner1D.cpp
-    src/function2D.cpp
-    src/mcmc2D.cpp
-    src/mh2D.cpp
-    src/drm2D.cpp
-    src/mtm2D.cpp
-    src/multiRunner2D.cpp
+    src/helpers.cpp
+    src/mcmc.cpp
     src/main.cpp
     )
 
