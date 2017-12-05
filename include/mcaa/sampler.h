@@ -1,35 +1,12 @@
 #pragma once
 
+#include <pcg32.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pcg32.h>
+#include <mcaa/common.h>
 
 class Sampler {
     public:
-        struct Sample {
-            Sample(int _value, int _valueBackup) :
-                value(_value), valueBackup(_valueBackup) { }
-
-            static void defPybind(pybind11::module &m) {
-                pybind11::class_<Sample>(m, "sample")
-                    .def(pybind11::init<int, int>(),
-                            pybind11::arg("value"),
-                            pybind11::arg("valueBackup"))
-                    .def("backup", &Sample::backup)
-                    .def("restore", &Sample::restore);
-            }
-
-            void backup() {
-                valueBackup = value;
-            }
-
-            void restore() {
-                value = valueBackup;
-            }
-
-            int value = 0;
-            int valueBackup = 0;
-        };
 
         Sampler(int N, uint32_t seed = 0xDEADBEEF); 
 
@@ -45,7 +22,7 @@ class Sampler {
         }
 
         inline int size() {
-            return m_X.size();
+            return m_X.values.size();
         }
 
         void accept(int index);
@@ -54,12 +31,24 @@ class Sampler {
 
         void swap(int index);
 
-        inline std::vector<Sample>& getSamples() {
-            return m_X;
+        inline VectorXf& getSamples() {
+            return m_X.values;
         }
 
     protected:
+        struct Sample {
+            Sample(int N); 
+
+            inline void swap(int index) {
+
+            }
+
+            VectorXf values; 
+        };
+
         pcg32 m_rng;
-        std::vector<Sample> m_X;
+        Sample m_X;
+
+        uint32_t m_currentIndex = 0;
 };
 

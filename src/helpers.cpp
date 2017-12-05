@@ -1,6 +1,10 @@
 #include <cmath>
-#include <mcaa/helpers.h>
 #include <pcg32.h>
+#include <iostream>
+#include <ctime>
+#include <pcg32.h>
+#include <mcaa/helpers.h>
+
 
 using namespace std;
 
@@ -12,9 +16,10 @@ void defPybindHelpers(pybind11::module &m) {
         .def("buildClasses", &buildClasses);
 }
 
-Float computeEnergy(vector<vector<Float>> const &patterns,
-        vector<Sampler::Sample> const &weights,
-        vector<int> const &classes) {
+Float computeEnergy(MatrixXf const &patterns,
+        VectorXf const &weights,
+        VectorXf const &classes) {
+    clock_t begin = clock();
     Float result = 0;
     int M = patterns.size();
     int N = weights.size();
@@ -22,20 +27,23 @@ Float computeEnergy(vector<vector<Float>> const &patterns,
     for (int i = 0; i < M; i++) {
         Float dotProduct = 0;
         for (int j = 0; j < N; j++) {
-            dotProduct += patterns[i][j] * weights[j].value;
+            dotProduct += patterns(i, j) * weights[j];
         }
 
         int tmp = classes[i] - signFloat(dotProduct);
         result += tmp * tmp;
     }
+    clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+    cout << elapsed_secs << endl;
 
     return 0.5 * result;
 }
 
-vector<int> buildRandomWeights(int N, uint32_t seed) {
+VectorXf buildRandomWeights(int N, uint32_t seed) {
     pcg32 rng;
     rng.seed(seed);
-    vector<int> out(N);
+    VectorXf out(N);
 
     for(int i = 0; i < N; i++) {
         out[i] = signFloat(rng.nextFloat() - 0.5); 
@@ -44,32 +52,29 @@ vector<int> buildRandomWeights(int N, uint32_t seed) {
     return out;
 }
 
-vector<vector<Float>> buildRandomPatterns(int N, int M, uint32_t seed) {
+MatrixXf buildRandomPatterns(int N, int M, uint32_t seed) {
     pcg32 rng;
     rng.seed(seed);
-    vector<vector<Float>> out(M);
+    MatrixXf out(M, N);
 
     for(int i = 0; i < M; i++) {
-        vector<Float> pattern(N);
-        for (int i = 0; i < N; i++) {
-            pattern[i] = rng.nextFloat();
+        for (int j = 0; j < N; j++) {
+            out(i, j) = rng.nextFloat();
         }
-
-        out[i] = pattern;
     }
 
     return out;
 }
 
-vector<int> buildClasses(vector<int> &weights, vector<vector<Float>> &patterns) {
+VectorXf buildClasses(VectorXf &weights, MatrixXf &patterns) {
     int M = patterns.size();
     int N = weights.size();
-    vector<int> out(M);
+    VectorXf out(M);
 
     for (int i = 0; i < M; i++) {
         Float dotProduct = 0;
         for (int j = 0; j < N; j++) {
-            dotProduct += patterns[i][j] * weights[j];
+            dotProduct += patterns(i, j) * weights[j];
         }
 
         out[i] = signFloat(dotProduct);

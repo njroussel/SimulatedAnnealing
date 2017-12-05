@@ -3,27 +3,28 @@
 #include <pcg32.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <mcaa/sampler.h>
+#include <mcaa/common.h>
 #include <mcaa/helpers.h>
+#include <mcaa/sampler.h>
 
 class MCMCRunner {
     public:
         MCMCRunner(int mutationCount, int measureStep, Float beta, Sampler &sampler, 
-                std::vector<std::vector<Float>> patterns, std::vector<int> classes,
+                MatrixXf &patterns, VectorXf &classes,
                 uint32_t seed = 0xDEADBEEF) :
             m_mutationCount(mutationCount),
             m_measureStep(measureStep), m_beta(beta), m_sampler(sampler),
             m_patterns(patterns), m_classes(classes) {
                 int EmeasuresLength = (int) (((Float) m_mutationCount) / m_measureStep) + 1;
-                m_EMeasures = std::vector<Float>(EmeasuresLength);
+                m_EMeasures = VectorXf(EmeasuresLength);
                 m_rng.seed(seed);
             }
 
 
         static void defPybind(pybind11::module &m) {
             pybind11::class_<MCMCRunner>(m, "MCMCRunner")
-                .def(pybind11::init<int, int, Float, Sampler&, std::vector<std::vector<Float>>,
-                        std::vector<int>, uint32_t>(),
+                .def(pybind11::init<int, int, Float, Sampler&, MatrixXf&,
+                        VectorXf&, uint32_t>(),
                         pybind11::arg("mutationCount"),
                         pybind11::arg("measureStep"),
                         pybind11::arg("beta"),
@@ -39,7 +40,7 @@ class MCMCRunner {
 
         void run();
 
-        inline std::vector<int> getClasses() {
+        inline VectorXf getClasses() {
             return m_classes;
         }
 
@@ -47,7 +48,7 @@ class MCMCRunner {
             return this;
         }
 
-        inline std::vector<Float> getEMeasures() const {
+        inline VectorXf getEMeasures() const {
             return m_EMeasures;
         }
 
@@ -57,8 +58,8 @@ class MCMCRunner {
         Float m_beta;
 
         pcg32 m_rng;
-        std::vector<std::vector<Float>> m_patterns;
-        std::vector<int> m_classes;
-        std::vector<Float> m_EMeasures;
+        MatrixXf m_patterns;
+        VectorXf m_classes;
+        VectorXf m_EMeasures;
         Sampler &m_sampler;
 };

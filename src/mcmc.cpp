@@ -23,7 +23,7 @@ void MCMCRunner::run()  {
 
         if (i % m_measureStep == 0) {
             int measureIndex = i / m_measureStep; 
-            m_EMeasures[measureIndex] = currentE;
+            m_EMeasures(measureIndex) = currentE;
         }
     }
 }
