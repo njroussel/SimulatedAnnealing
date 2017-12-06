@@ -2,7 +2,7 @@
 
 #include <pcg32.h>
 #include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
+#include <pybind11/eigen.h>
 #include <mcaa/common.h>
 
 class Sampler {
@@ -17,38 +17,37 @@ class Sampler {
                         pybind11::arg("seed") = 0xDEADBEEF)
                 .def("accept", &Sampler::accept)
                 .def("reject", &Sampler::reject)
-                .def("swap", &Sampler::swap)
+                .def("mutate", &Sampler::mutate)
                 .def("getSamples", &Sampler::getSamples);
         }
 
         inline int size() {
-            return m_X.values.size();
+            return m_sample.values.size();
         }
 
-        void accept(int index);
+        void accept();
 
-        void reject(int index);
+        void reject();
 
-        void swap(int index);
+        void mutate(int index);
 
         inline VectorXf& getSamples() {
-            return m_X.values;
+            return m_sample.values;
         }
 
     protected:
+
         struct Sample {
-            Sample(int N); 
+            Sample(int N, uint32_t seed = 0xDEADBEEF); 
 
             inline void swap(int index) {
-
+                values(index) *= -1.0;
             }
 
             VectorXf values; 
         };
 
-        pcg32 m_rng;
-        Sample m_X;
-
-        uint32_t m_currentIndex = 0;
+        Sample m_sample;
+        uint32_t m_currentIndex;
 };
 
