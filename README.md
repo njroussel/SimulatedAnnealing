@@ -31,12 +31,11 @@ git clone --recursive git@github.com:njroussel/MCAA.git
 pip install ./MCMCKernels
 ```
 
-The whole build system uses CMake, it is therfore a requirement for building an running this project.
+The whole build system uses CMake, it is therfore a requirement for building and running this project.
 
 Note that the Jupyter notebooks will need specific packages which can be installed through `pip`.
 
 
 ### Running
 
-The notebook `Running.ipynb` should already have the cells rendered, you can also simply just run the again.
-
+The notebook `Running.ipynb` should already have the cells rendered, you can also simply just run them again.

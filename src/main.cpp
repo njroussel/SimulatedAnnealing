@@ -11,6 +11,9 @@ namespace py = pybind11;
 
 using namespace std;
 
+/**
+ * Calls all pybind definitions.
+ */
 PYBIND11_MODULE(mcaa, m) {
     m.doc() = R"pbdoc(
         MCAA mini-project implementation

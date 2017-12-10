@@ -6,8 +6,38 @@
 #include <mcaa/common.h>
 #include <mcaa/sampler.h>
 
+/**
+ * \brief Simple MCMC runner for simulated annealing 
+ */
 class MCMCRunner {
     public:
+        /**
+         * \brief Constructs a MCMCRunner runners. 
+         *
+         * \param mutationCount 
+         *  The number of mutations which we be ran.
+         *
+         * \param measureStep 
+         *  The number of mutations between each measure (energy and overlap).
+         *
+         * \param beta 
+         *  The inital temperature parameter.
+         *
+         * \param sampler 
+         *  The sampler to be used by this runner.
+         *
+         * \param weights 
+         *  The goal weights.
+         *
+         * \param patterns 
+         *  The patterns (input data).
+         *
+         * \param classes 
+         *  The classes (output data).
+         *
+         * \param seed 
+         *  A random seed to be used for this runner.
+         */
         MCMCRunner(int mutationCount, int measureStep, Float beta, Sampler &sampler, 
                 VectorXf &weights, MatrixXf &patterns, VectorXf &classes,
                 uint32_t seed = 0xDEADBEEF) :
@@ -20,6 +50,9 @@ class MCMCRunner {
                 m_rng.seed(seed);
             }
 
+        /**
+         * \brief Pybind bindings for MCMCRunner
+         */
         static void defPybind(pybind11::module &m) {
             pybind11::class_<MCMCRunner>(m, "MCMCRunner")
                 .def(pybind11::init<int, int, Float, Sampler&, VectorXf&,
@@ -39,20 +72,36 @@ class MCMCRunner {
                 .def("getOverlapMeasures", &MCMCRunner::getOverlapMeasures);
         }
 
+
+        /**
+         * \brief Runs the MCMC method for the defined number of mutations. 
+         */
         void run();
 
+        /**
+         * \brief Returns the goal classes.
+         */
         inline VectorXf getClasses() {
             return m_classes;
         }
 
+        /**
+         * \brief Returns this object's pointer.
+         */
         inline MCMCRunner* getPointer() {
             return this;
         }
 
+        /**
+         * \brief Returns the energy measures from this run.
+         */
         inline VectorXf getEMeasures() const {
             return m_EMeasures;
         }
 
+        /**
+         * \brief Returns the overlap measures from this run.
+         */
         inline VectorXf getOverlapMeasures() const {
             return m_overlapMeasures;
         }
