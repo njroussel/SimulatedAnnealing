@@ -37,11 +37,11 @@ PYBIND11_MODULE(mcaa, m) {
 
 /*
 int main() {
-    Float BETA = 1.0;
-    Float ALPHA = 1.0;
+    Float BETA = 200;
+    Float ALPHA = 2.0;
     int N = 10;
     int M = (int) ALPHA * N;;
-    int T = 1 * N;
+    int T = 1000 * N;
     int MEASURE_STEP = 1;
 
     VectorXf weights = buildRandomWeights(N, 420);
@@ -55,11 +55,12 @@ int main() {
 
     std::vector<MCMCRunner*> runners;
     runners.push_back(&runner1);
-    runners.push_back(&runner2);
-    MultiMCMCRunner multi(2, runners);
-    multi.runAll();
+    MultiMCMCRunner multi(1, runners);
+    runner1.run();
 
-    multi.getEMeasures();
-    multi.getOverlapMeasures();
-}
-*/
+    
+    cout << runner1.getOverlapMeasures()(8000) << endl;
+
+    //multi.getEMeasures();
+    //multi.getOverlapMeasures();
+}*/
