@@ -6,6 +6,7 @@ using namespace std;
 void MCMCRunner::run()  {
     Float currentE = computeEnergy(m_patterns, m_sampler.getSamples(), m_classes);
     m_EMeasures(0) = currentE;
+    m_overlapMeasures(0) = computeOverlap(m_weights, m_sampler.getSamples());
 
     for(int i = 0; i < m_mutationCount; i++) {
         int index = (int) (m_rng.nextFloat() * m_sampler.size());
