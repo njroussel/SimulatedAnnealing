@@ -41,7 +41,7 @@ MatrixXf buildRandomPatterns(int N, int M, uint32_t seed) {
 
     for(int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
-            out(i, j) = rng.nextFloat();
+            out(i, j) = signFloat(rng.nextFloat() - 0.5); 
         }
     }
 
