@@ -5,8 +5,8 @@ import numpy as np
 
 def pythonRunner(beta, alpha, n, tFactor, measureStep, runCount, threadCount): 
     # CONSTANTS
-    BETA =  beta
-    ALPHA =  alpha
+    BETA = beta
+    ALPHA = alpha
     N = n
     M = int(ALPHA * N) 
     T = tFactor * N
@@ -27,7 +27,8 @@ def pythonRunner(beta, alpha, n, tFactor, measureStep, runCount, threadCount):
 
     # SAMPLERS & RUNNERS
     samplers = [mcaa.sampler(N, samplerSeeds[i]) for i in range(RUN_COUNT)]
-    runners = [mcaa.MCMCRunner(T, MEASURE_STEP, BETA, samplers[i], weights, patterns, classes, runnerSeeds[i])            for i in range(RUN_COUNT)]
+    schedules = [mcaa.constantSchedule(BETA) for i in range(RUN_COUNT)]
+    runners = [mcaa.MCMCRunner(T, MEASURE_STEP, schedules[i], samplers[i], weights, patterns, classes, runnerSeeds[i])            for i in range(RUN_COUNT)]
     multiRunner = mcaa.multiMCMCRunner(THREAD_COUNT, [runner.getPointer() for runner in runners]) 
 
     # RUN
