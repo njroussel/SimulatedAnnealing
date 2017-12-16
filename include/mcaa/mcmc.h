@@ -5,6 +5,7 @@
 #include <pybind11/eigen.h>
 #include <mcaa/common.h>
 #include <mcaa/sampler.h>
+#include <mcaa/schedule.h>
 
 /**
  * \brief Simple MCMC runner for simulated annealing 
@@ -38,11 +39,11 @@ class MCMCRunner {
          * \param seed 
          *  A random seed to be used for this runner.
          */
-        MCMCRunner(int mutationCount, int measureStep, Float beta, Sampler &sampler, 
+        MCMCRunner(int mutationCount, int measureStep, Schedule &schedule, Sampler &sampler, 
                 VectorXf &weights, MatrixXf &patterns, VectorXf &classes,
                 uint32_t seed = 0xDEADBEEF) :
             m_mutationCount(mutationCount),
-            m_measureStep(measureStep), m_beta(beta), m_sampler(sampler),
+            m_measureStep(measureStep), m_schedule(schedule), m_sampler(sampler),
             m_weights(weights), m_patterns(patterns), m_classes(classes) {
                 int EmeasuresLength = (int) (((Float) m_mutationCount) / m_measureStep) + 1;
                 m_EMeasures = VectorXf(EmeasuresLength);
@@ -55,11 +56,11 @@ class MCMCRunner {
          */
         static void defPybind(pybind11::module &m) {
             pybind11::class_<MCMCRunner>(m, "MCMCRunner")
-                .def(pybind11::init<int, int, Float, Sampler&, VectorXf&,
+                .def(pybind11::init<int, int, Schedule&, Sampler&, VectorXf&,
                         MatrixXf&, VectorXf&, uint32_t>(),
                         pybind11::arg("mutationCount"),
                         pybind11::arg("measureStep"),
-                        pybind11::arg("beta"),
+                        pybind11::arg("schedule"),
                         pybind11::arg("sampler"),
                         pybind11::arg("weights"),
                         pybind11::arg("patterns"),
@@ -109,7 +110,6 @@ class MCMCRunner {
     protected:
         int m_mutationCount;
         int m_measureStep;
-        Float m_beta;
 
         pcg32 m_rng;
         VectorXf m_weights;
@@ -118,4 +118,5 @@ class MCMCRunner {
         VectorXf m_EMeasures;
         VectorXf m_overlapMeasures;
         Sampler &m_sampler;
+        Schedule &m_schedule;
 };

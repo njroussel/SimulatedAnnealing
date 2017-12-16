@@ -4,6 +4,8 @@
 #include <mcaa/common.h>
 #include <mcaa/helpers.h>
 #include <mcaa/sampler.h>
+#include <mcaa/schedule.h>
+#include <mcaa/constant.h>
 #include <mcaa/mcmc.h>
 #include <mcaa/multimcmc.h>
 
@@ -28,6 +30,8 @@ PYBIND11_MODULE(mcaa, m) {
 
     defPybindHelpers(m);
     Sampler::defPybind(m);
+    Schedule::defPybind(m);
+    ConstantSchedule::defPybind(m);
     MCMCRunner::defPybind(m);
     MultiMCMCRunner::defPybind(m);
 

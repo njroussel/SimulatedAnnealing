@@ -21,12 +21,16 @@ pybind11_add_module(mcaa
     include/mcaa/common.h
     include/mcaa/helpers.h
     include/mcaa/sampler.h
+    include/mcaa/schedule.h
+    include/mcaa/constant.h
     include/mcaa/mcmc.h
     include/mcaa/multimcmc.h
 
     # Source files
     src/helpers.cpp
     src/sampler.cpp
+    src/schedule.cpp
+    src/constant.cpp
     src/mcmc.cpp
     src/multimcmc.cpp
     src/main.cpp

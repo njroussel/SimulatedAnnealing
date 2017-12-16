@@ -14,7 +14,7 @@ void MCMCRunner::run()  {
 
         Float proposedE = computeEnergy(m_patterns, m_sampler.getSamples(), m_classes);
 
-        Float tmpAccept = computeGibbsBoltzmann(m_beta, currentE, proposedE);
+        Float tmpAccept = computeGibbsBoltzmann(m_schedule.computeNextTemp(), currentE, proposedE);
         Float accept = 1.0 < tmpAccept ? 1.0 : tmpAccept;
 
         if (m_rng.nextFloat() < accept) {
