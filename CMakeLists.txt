@@ -29,8 +29,6 @@ pybind11_add_module(mcaa
     # Source files
     src/helpers.cpp
     src/sampler.cpp
-    src/schedule.cpp
-    src/constant.cpp
     src/mcmc.cpp
     src/multimcmc.cpp
     src/main.cpp
