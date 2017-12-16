@@ -6,9 +6,14 @@
 /**
  * \brief Constat Schedule used for MCMC simulated annealing
  */
-
 class ConstantSchedule : public Schedule {
     public:
+        /**
+         * \brief Constructs a constant schedule
+         *
+         * \param beta
+         *  The constant value of the temperature
+         */
         ConstantSchedule(Float beta) : Schedule() {
             m_beta = beta;
         } 
@@ -22,6 +27,10 @@ class ConstantSchedule : public Schedule {
                         pybind11::arg("beta"));
         }
 
+        /**
+         * \brief Computes and returns the next value of the temperature for the 
+         * current schedule
+         */
         inline Float computeNextTemp() {
             return m_beta;
         }
