@@ -5,8 +5,11 @@ using namespace std;
 
 void MCMCRunner::run()  {
     Float currentE = computeEnergy(m_patterns, m_sampler.getSamples(), m_classes);
-    m_EMeasures(0) = currentE;
-    m_overlapMeasures(0) = computeOverlap(m_weights, m_sampler.getSamples());
+
+    if (m_measureStep != 0) {
+        m_EMeasures(0) = currentE;
+        m_overlapMeasures(0) = computeOverlap(m_weights, m_sampler.getSamples());
+    }
 
     for(int i = 0; i < m_mutationCount; i++) {
         int index = (int) (m_rng.nextFloat() * m_sampler.size());
@@ -24,10 +27,15 @@ void MCMCRunner::run()  {
             m_sampler.reject();
         }
 
-        if (i % m_measureStep == 0) {
+        if (m_measureStep != 0 && i % m_measureStep == 0) {
             int measureIndex =  1 + i / m_measureStep; 
             m_EMeasures(measureIndex) = currentE;
             m_overlapMeasures(measureIndex) = computeOverlap(m_weights, m_sampler.getSamples());
         }
+    }
+
+    if (m_measureStep == 0) {
+        m_EMeasures(0) = currentE;
+        m_overlapMeasures(0) = computeOverlap(m_weights, m_sampler.getSamples());
     }
 }

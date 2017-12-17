@@ -23,6 +23,10 @@ pybind11_add_module(mcaa
     include/mcaa/sampler.h
     include/mcaa/schedule.h
     include/mcaa/constant.h
+    include/mcaa/contlinear.h
+    include/mcaa/contpolynomial.h
+    include/mcaa/contlogarithmic.h
+    include/mcaa/contexponential.h
     include/mcaa/mcmc.h
     include/mcaa/multimcmc.h
 

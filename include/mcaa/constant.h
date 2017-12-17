@@ -4,22 +4,21 @@
 #include <mcaa/common.h>
 
 /**
- * \brief Constat Schedule used for MCMC simulated annealing
+ * \brief Constant Schedule used for MCMC simulated annealing.
  */
 class ConstantSchedule : public Schedule {
     public:
         /**
-         * \brief Constructs a constant schedule
+         * \brief Constructs a constant schedule.
          *
          * \param beta
-         *  The constant value of the temperature
+         *  The constant value of the temperature.
          */
-        ConstantSchedule(Float beta) : Schedule() {
-            m_beta = beta;
+        ConstantSchedule(Float beta) : Schedule(), m_beta(beta) {
         } 
 
         /**
-         * \brief Pybind bindings for Schedule. 
+         * \brief Pybind bindings for ConstantSchedule. 
          */
         static void defPybind(pybind11::module &m) {
             pybind11::class_<ConstantSchedule, Schedule>(m, "constantSchedule")
@@ -28,11 +27,13 @@ class ConstantSchedule : public Schedule {
         }
 
         /**
-         * \brief Computes and returns the next value of the temperature for the 
-         * current schedule
+         * \brief Computes and returns the next value of the temperature. 
          */
         inline Float computeNextTemp() {
             return m_beta;
         }
+
+    private: 
+        Float m_beta;
 };
 

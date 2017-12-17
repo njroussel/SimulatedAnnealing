@@ -3,9 +3,10 @@ import random as rng
 import matplotlib.pyplot as plt
 import numpy as np
 
-def pythonRunner(beta, alpha, n, tFactor, measureStep, runCount, threadCount): 
+def linearRunner(offset, exponent, alpha, n, tFactor, measureStep, runCount, threadCount): 
     # CONSTANTS
-    BETA = beta
+    OFFSET = offset
+    EXPONENT = exponent
     ALPHA = alpha
     N = n
     M = int(ALPHA * N) 
@@ -27,7 +28,7 @@ def pythonRunner(beta, alpha, n, tFactor, measureStep, runCount, threadCount):
 
     # SAMPLERS & RUNNERS
     samplers = [mcaa.sampler(N, samplerSeeds[i]) for i in range(RUN_COUNT)]
-    schedules = [mcaa.constantSchedule(BETA) for i in range(RUN_COUNT)]
+    schedules = [mcaa.continuousPolynomialSchedule(T, OFFSET, EXPONENT) for i in range(RUN_COUNT)]
     runners = [mcaa.MCMCRunner(T, MEASURE_STEP, schedules[i], samplers[i], weights, patterns, classes, runnerSeeds[i])            for i in range(RUN_COUNT)]
     multiRunner = mcaa.multiMCMCRunner(THREAD_COUNT, [runner.getPointer() for runner in runners]) 
 

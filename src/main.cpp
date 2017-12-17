@@ -6,6 +6,10 @@
 #include <mcaa/sampler.h>
 #include <mcaa/schedule.h>
 #include <mcaa/constant.h>
+#include <mcaa/contlinear.h>
+#include <mcaa/contpolynomial.h>
+#include <mcaa/contlogarithmic.h>
+#include <mcaa/contexponential.h>
 #include <mcaa/mcmc.h>
 #include <mcaa/multimcmc.h>
 
@@ -32,6 +36,10 @@ PYBIND11_MODULE(mcaa, m) {
     Sampler::defPybind(m);
     Schedule::defPybind(m);
     ConstantSchedule::defPybind(m);
+    ContinuousLinearSchedule::defPybind(m);
+    ContinuousPolynomialSchedule::defPybind(m);
+    ContinuousLogarithmicSchedule::defPybind(m);
+    ContinuousExponentialSchedule::defPybind(m);
     MCMCRunner::defPybind(m);
     MultiMCMCRunner::defPybind(m);
 

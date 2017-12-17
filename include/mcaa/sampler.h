@@ -12,7 +12,7 @@ class Sampler {
     public:
 
         /**
-         * \brief Constructs a sampler of a given size
+         * \brief Constructs a sampler of a given size.
          *
          * \param N
          *  The length of the weights in the Ising perceptron model.

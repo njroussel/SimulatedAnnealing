@@ -45,7 +45,8 @@ class MCMCRunner {
             m_mutationCount(mutationCount),
             m_measureStep(measureStep), m_schedule(schedule), m_sampler(sampler),
             m_weights(weights), m_patterns(patterns), m_classes(classes) {
-                int EmeasuresLength = (int) (((Float) m_mutationCount) / m_measureStep) + 1;
+                int EmeasuresLength = m_measureStep == 0 ?
+                    1 : (int) (((Float) m_mutationCount) / m_measureStep) + 1;
                 m_EMeasures = VectorXf(EmeasuresLength);
                 m_overlapMeasures = VectorXf(EmeasuresLength);
                 m_rng.seed(seed);
