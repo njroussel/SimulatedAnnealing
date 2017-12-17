@@ -3,7 +3,7 @@ import random as rng
 import matplotlib.pyplot as plt
 import numpy as np
 
-def linearRunner(offset, exponent, alpha, n, tFactor, measureStep, runCount, threadCount): 
+def polynomialRunner(offset, exponent, alpha, n, tFactor, measureStep, runCount, threadCount): 
     # CONSTANTS
     OFFSET = offset
     EXPONENT = exponent
@@ -36,7 +36,7 @@ def linearRunner(offset, exponent, alpha, n, tFactor, measureStep, runCount, thr
     multiRunner.runAll()
 
     # OUTPUTS 
-    allEMeasures = multiRunner.getEMeasures()
+    allEMeasures = multiRunner.getEMeasures() / M 
     allOverlapMeasures = multiRunner.getOverlapMeasures()
 
     return allEMeasures, allOverlapMeasures

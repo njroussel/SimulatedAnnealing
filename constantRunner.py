@@ -35,7 +35,7 @@ def constantRunner(beta, alpha, n, tFactor, measureStep, runCount, threadCount):
     multiRunner.runAll()
 
     # OUTPUTS 
-    allEMeasures = multiRunner.getEMeasures()
+    allEMeasures = multiRunner.getEMeasures() / M
     allOverlapMeasures = multiRunner.getOverlapMeasures()
 
     return allEMeasures, allOverlapMeasures

@@ -36,7 +36,7 @@ def linearRunner(offset, slope, alpha, n, tFactor, measureStep, runCount, thread
     multiRunner.runAll()
 
     # OUTPUTS 
-    allEMeasures = multiRunner.getEMeasures()
+    allEMeasures = multiRunner.getEMeasures() / M
     allOverlapMeasures = multiRunner.getOverlapMeasures()
 
     return allEMeasures, allOverlapMeasures
