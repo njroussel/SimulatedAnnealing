@@ -12,7 +12,8 @@ class Schedule {
          * \brief Pybind bindings for Schedule. 
          */
         static void defPybind(pybind11::module &m) {
-            pybind11::class_<Schedule>(m, "schedule");
+            pybind11::class_<Schedule>(m, "schedule")
+                .def("computeNextTemp", &Schedule::computeNextTemp);
         }
 
         /**
