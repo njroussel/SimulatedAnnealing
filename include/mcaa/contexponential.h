@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 #include <mcaa/schedule.h>
 #include <mcaa/schedule.h>
 #include <mcaa/common.h>
@@ -43,7 +42,6 @@ class ContinuousExponentialSchedule : public Schedule {
          */
         inline Float computeNextTemp() {
             float result = m_offset * std::pow(m_base,  -m_currentTime);
-            std::cout << m_currentTime << std::endl;
             m_currentTime += m_stepSize;
             return result;
         }
