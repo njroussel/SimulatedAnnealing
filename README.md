@@ -15,20 +15,20 @@ In short, it is an implementation of simulated annealing for the Ising perceptro
 ## Documentation ##
 
 Code is directly commented, there is no additional documentation.
+The report and its figure are in the `report` folder.
 
 ## Setup
 
 The code base is written in C++ using [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) for all linear algebra related operations.
-This is then built into a shared library which is accessible in Python thanks to [Pybind11](https://github.com/pybind/pybind11).
-Finally a [Jupyter Notebook](http://jupyter.org/) is used to run the previous code in Python.
+This is then built into a shared library which is accessible as Python module thanks to [Pybind11](https://github.com/pybind/pybind11).
+Finally a [Jupyter Notebook](http://jupyter.org/) is used to run the previous Python code.
 
 ### Building
 
 On a Linux or equivalent system using gcc, you can simply: 
 
 ```
-git clone --recursive git@github.com:njroussel/MCAA.git
-pip install ./MCMCKernels
+pip install ./MCAA_PROJECT_nRoussel
 ```
 
 The whole build system uses CMake, it is therfore a requirement for building and running this project.
@@ -38,4 +38,4 @@ Note that the Jupyter notebooks will need specific packages which can be install
 
 ### Running
 
-The notebook `Running.ipynb` should already have the cells rendered, you can also simply just run them again.
+In the `python` folder, there are several notebooks which contain examples of how to run code. They should already have the cells rendered, you can also simply just run them again if you change their configuration.

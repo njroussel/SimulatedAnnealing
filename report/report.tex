@@ -37,14 +37,14 @@ In this report, we formulate the Ising perceptron in a learning problem and use 
 
 Let $\underline{w}^*$ be a random vector of size $N$ where every component is in \{-1, +1\} (i.i.d. uniformly distributed). This vector is the goal weights to achieve by our Ising perceptron. We then generate \textit{M} vectors of size \textit{N} which we call $\underline{x}_{\mu}$ for $\mu = 1, 2, .., M$ such that $\underline{x}_{\mu} \in \mathbb{R}^{N}$. These are the patterns of the dataset. Finally, from these patterns and weights we generate $y_{\mu}$ where
 \[y_{\mu} = sign(\underline{w}^* \cdot \underline{x}_{\mu}) \;, \;\mu = 1, 2, .., M\]
-This is a vector of size $N$ where each of its components is respectively the class assigned to $\underline{x}_{\mu}$.
+This is a vector of size $M$ where each of its components is respectively the class assigned to $\underline{x}_{\mu}$.
 
 The goal of the problem is to find $\underline{w}^*$ when only given the pattern and classes pairs ($\underline{x}_{\mu}$, $y_{\mu}$). Note that we define $M$ as $\alpha = M/N$, and are interested in the different values $\alpha$ can take for large $M, N$.  
 
 \section{MCMC solution}\label{MCMC_SOL}
 
 The Markov Chain Monte-Carlo solution to this problem is quite straightforward. The core idea is to start from a random weights vector $\underline{w}$ and swap its components until we reach a solution to the following equation: 
- \[y_{\mu} = sign(\underline{w} \cdot \underline{x}_{\mu})\]
+ \[y_{\mu} = sign(\underline{w} \cdot \underline{x}_{\mu}) \;, \;\mu = 1, 2, .., M\]
  
  Here is the actual algorithm step by step:
  
@@ -85,32 +85,32 @@ Constant schedules are exactly the algorithm described in chapter \ref{MCMC_SOL}
 \end{figure}
 
 
-Figure \ref{fig:FIG1} and \ref{fig:FIG2} illustrate how the energy typically evolves over time for a constant schedule (other values of $\alpha$ and $\beta$ show the same behavior). The main difference which can be observed when changing $\alpha$ and $\beta$ is how fast the energy plateaus and at which value. Figure \ref{fig:FIG2} and \ref{fig:FIG3} illustrates this. When $\beta$ is very small, the plots are much noisier and the normalized energy typically stays around 1. This happens due to the fact that the acceptance probability is always 1 or close to 1 in this particular situation.
+Figure \ref{fig:FIG1}, \ref{fig:FIG2} and \ref{fig:FIG3} illustrate how the energy typically evolves over time for a constant schedule (other values of $\alpha$ and $\beta$ show the same behavior). The main difference which can be observed when changing $\alpha$ and $\beta$ is how fast the energy plateaus and at which value. Figure \ref{fig:FIG2} and \ref{fig:FIG3} illustrates this. When $\beta$ is very small, the plots are much noisier and the normalized energy typically stays around 1. This happens due to the fact that the acceptance probability is always 1 or close to 1.
 
-An other metric is the overlap $q(\alpha, \beta) = \frac{1}{N} \sum_{i = 1}^{N}(w_i w_{i}^{*}$. This indicates how close we are to the ground truth weights (our goal). For cases where $\alpha$ is small there might be several solutions to the equation in chapter \ref{MCMC_SOL}, hence the energy can reach 0 but the overlap is not 1.
+Another metric is the overlap $q(\alpha, \beta) = \frac{1}{N} \sum_{i = 1}^{N}(w_i w_{i}^{*})$. This indicates how close we are to the ground truth weights (our goal). For cases where $\alpha$ is small there might be several solutions to the equation in chapter \ref{MCMC_SOL}, hence the energy can reach 0 but the overlap is not 1.
 
-Figures \ref{fig:FIG4} and \ref{fig:FIG5} respectively show the averaged normalized energies and overlaps as a function of these parameters. Interestingly enough we can see the performance completely switch order as $\alpha$ grows.
+Figures \ref{fig:FIG4} and \ref{fig:FIG5} respectively show the averaged normalized energies and overlaps as function of $\alpha$ for different values of $\beta$. Interestingly enough we can see the performance completely switch order as $\alpha$ grows.
 
 This can be explained by the previously mentioned case where the acceptance probability is very close to 1 - when both $\alpha$ and $\beta$ are small. Additionally, as said before, when $\alpha$ is small there are multiple weight vectors which can reach a very low energy but might not have a good overlap. This is exactly what is illustrated in both figures.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{FIG4.png}
-\caption{\label{fig:FIG4}Averaged normalized energy at 50000 iterations over alpha for $N = 100$. Averaged over 128 independent runs of the algorithm using different random seeds.}
+\includegraphics[width=0.9\textwidth]{FIG4.png}
+\caption{\label{fig:FIG4}Averaged normalized energy at 50000 iterations over $\alpha$ for $N = 100$. Averaged over 128 independent runs of the algorithm. The horizontal caps represent the standard deviation of the measures.}
 \end{figure}
 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{FIG5.png}
-\caption{\label{fig:FIG5}Averaged overlap at 50000 iterations over alpha for $N = 100$. Averaged over 128 independent runs of the algorithm using different random seeds.}
+\includegraphics[width=0.9\textwidth]{FIG5.png}
+\caption{\label{fig:FIG5}Averaged overlap at 50000 iterations over $\alpha$ for $N = 100$. Averaged over 128 independent runs of the algorithm. The horizontal caps represent the standard deviation of the measures.}
 \end{figure}
 
 \subsection{Second part: linear, polynomial, logarithmic and exponential schedules}
 
 These are the schedules which were experimented with : linear, sublinear, polynomial, logarithmic and exponential. The Figure \ref{fig:FIG6} illustrates each one of them and the Table \ref{table:TAB1} has their formal definitions. They were all optimized with a coarse grained grid search for $N = 100$, and $\alpha = 5$. Of course, there might be added value to optimizing these parameters for individual $\alpha$s and $N$s.
 
-There was also an attempt to quantizing these schedules. The main difference would be that the temperature would not change at every iteration, but only after a few iterations. There was no major improvement to notice.
+There was also an experiment to quantize these schedules. The main difference would be that the temperature would not change at every iteration, but only after a few iterations. There was no signifcant improvement to notice.
 
 Figure \ref{fig:FIG7} and \ref{fig:FIG8} show the average normalized energies and overlaps of each schedule.
 
@@ -139,16 +139,17 @@ $\beta_0 = 0.6$ & $\beta_0 = 0.2$ & $\beta_0 = 1.1$ & $\beta_0 = 1.1$ & $\beta_0
 \begin{figure}
 \centering
 \includegraphics[width=1.0\textwidth]{FIG7.png}
-\caption{\label{fig:FIG7}Average normalized energy at 10000 iterations over alpha per schedule ($N = 100$). Averaged over 128 independent runs of the algorithm using different random seeds. The horizontal caps represent the standard deviation of the measures.}
+\caption{\label{fig:FIG7}Average normalized energy at 10000 iterations over $\alpha$ per schedule ($N = 100$). Averaged over 128 independent runs of the algorithm. The horizontal caps represent the standard deviation of the measures.}
 \end{figure}
+
 \begin{figure}
-\centering
+\centering/home/nicolas/Downloads/simulated-annealing-ising.pdf
 \includegraphics[width=1.0\textwidth]{FIG8.png}
-\caption{\label{fig:FIG8}Average ovlerap at 10000 iterations over alpha per schedule ($N = 100$). Averaged over 128 independent runs of the algorithm using different random seeds. The horizontal caps represent the standard deviation of the measures.}
+\caption{\label{fig:FIG8}Average ovlerap at 10000 iterations over $\alpha$ per schedule ($N = 100$). Averaged over 128 independent runs of the algorithm. The horizontal caps represent the standard deviation of the measures.}
 \end{figure}
 
 \section{Conclusion}
-There is clearly no schedule which has a clear advantage over all others. However, slow-growing functions do have a better standard deviation which make them more consistent in practice. Differences might be more marked with larger values for $N$ and better tuned parameters - more computation time would be needed.
+There is no schedule which has a clear advantage over all others. However, slow-growing functions do have a better standard deviation which make them more consistent in practice. Differences might be more marked with larger values for $N$ and better tuned parameters - more computation time would be needed.
 
 \section{Going further}
 There are a few more steps one can take to improve the performance of the final schedules found here. First of all, some finer tuning of the schedule parameters might give better results. Adding a constant offset to the temperature for certain schedules would avoid acceptance probabilities close to 1 in early stages of the algorithm. Investigating into other schemes might also be an interesting path to take, there might be parts of the schedule which can be more "aggressive" in their increases. Finally, using a Gibbs sampler instead of a Metropolis approach to this simulated annealing problem could also give some additional insights.
