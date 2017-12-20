@@ -28,7 +28,7 @@ Finally a [Jupyter Notebook](http://jupyter.org/) is used to run the previous Py
 On a Linux or equivalent system using gcc, you can simply: 
 
 ```
-git clone git@github.com:njroussel/MCAA.git --recurive
+git clone git@github.com:njroussel/MCAA.git --recursive
 pip install ./MCAA
 ```
 
