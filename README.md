@@ -15,7 +15,7 @@ In short, it is an implementation of simulated annealing for the Ising perceptro
 ## Documentation ##
 
 Code is directly commented, there is no additional documentation.
-The report and its figure are in the `report` folder.
+The report and its figures are in the `report` folder.
 
 ## Setup
 
@@ -28,7 +28,8 @@ Finally a [Jupyter Notebook](http://jupyter.org/) is used to run the previous Py
 On a Linux or equivalent system using gcc, you can simply: 
 
 ```
-pip install ./MCAA_PROJECT_nRoussel
+git clone git@github.com:njroussel/MCAA.git --recurive
+pip install ./MCAA
 ```
 
 The whole build system uses CMake, it is therfore a requirement for building and running this project.
