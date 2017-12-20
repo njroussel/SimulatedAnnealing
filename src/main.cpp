@@ -11,7 +11,9 @@
 #include <mcaa/contlogarithmic.h>
 #include <mcaa/contexponential.h>
 #include <mcaa/mcmc.h>
+#include <mcaa/competition.h>
 #include <mcaa/multimcmc.h>
+#include <mcaa/multicompetition.h>
 
 namespace py = pybind11;
 
@@ -41,7 +43,9 @@ PYBIND11_MODULE(mcaa, m) {
     ContinuousLogarithmicSchedule::defPybind(m);
     ContinuousExponentialSchedule::defPybind(m);
     MCMCRunner::defPybind(m);
+    CompetitionRunner::defPybind(m);
     MultiMCMCRunner::defPybind(m);
+    MultiCompetitionRunner::defPybind(m);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;

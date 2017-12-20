@@ -28,13 +28,17 @@ pybind11_add_module(mcaa
     include/mcaa/contlogarithmic.h
     include/mcaa/contexponential.h
     include/mcaa/mcmc.h
+    include/mcaa/competition.h
     include/mcaa/multimcmc.h
+    include/mcaa/multicompetition.h
 
     # Source files
     src/helpers.cpp
     src/sampler.cpp
     src/mcmc.cpp
+    src/competition.cpp
     src/multimcmc.cpp
+    src/multicompetition.cpp
     src/main.cpp
     )
 
