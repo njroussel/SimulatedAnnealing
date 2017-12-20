@@ -10,7 +10,7 @@ def competitionRunner(X, Y, schedules, m, n, tFactor, measureStep):
     M = m
     T = tFactor * N
     MEASURE_STEP = measureStep
-    RUN_COUNT = 4 
+    RUN_COUNT = 4
     THREAD_COUNT = 4
 
     # SEEDS

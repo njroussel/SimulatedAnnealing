@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(mcaa)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+find_package(Threads)
 
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
 add_subdirectory(ext ext_build)
 
 include_directories(
@@ -44,7 +47,6 @@ pybind11_add_module(mcaa
 
 #[[
 set(CMAKE_BUILD_TYPE Debug)
-find_package(Threads)
 
 add_executable(mcaa
     # Header files
