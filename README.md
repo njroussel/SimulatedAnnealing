@@ -9,7 +9,7 @@
 
 ## About ##
 
-This repository contains the code for the [Markov Chains and Aglorithimic Applications](http://ipgold.epfl.ch/~leveque/Markov_Chains/) class given at EPFL.
+This repository contains the code for the [Markov Chains and Algorithimic Applications](http://ipgold.epfl.ch/~leveque/Markov_Chains/) class given at EPFL.
 In short, it is an implementation of simulated annealing for the Ising perceptron. 
 
 ## Documentation ##
@@ -32,7 +32,7 @@ git clone git@github.com:njroussel/MCAA.git --recursive
 pip install ./MCAA
 ```
 
-The whole build system uses CMake, it is therfore a requirement for building and running this project.
+The whole build system uses CMake, it is therefore a requirement for building and running this project.
 
 Note that the Jupyter notebooks will need specific packages which can be installed through `pip`.
 
